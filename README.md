@@ -1,3 +1,4 @@
+[![Documentation Status](https://readthedocs.org/projects/python-sdbus-notifications/badge/?version=latest)](https://python-sdbus-notifications.readthedocs.io/en/latest/?badge=latest)
 # Freedesktop notifications binds for python-sdbus
 
 Supports both asyncio (under `sdbus_async.notifications` module) and blocking (under `sdbus_block.notifications` module) 
@@ -5,8 +6,20 @@ Supports both asyncio (under `sdbus_async.notifications` module) and blocking (u
 Implemented:
 
 * NotificationsInterface - notifications interface to implement your own notifications daemon.
-* FreedesktopNotifications - notifications interface proxy connected to 'org.freedesktop.Notifications' and '/org/freedesktop/Notifications'
+* FreedesktopNotifications - notifications interface proxy connected to `org.freedesktop.Notifications` service and `/org/freedesktop/Notifications` path
+
+## Requirements
+
+* `python-sdbus` version higher than 0.8rc2
+
+See [python-sdbus requirements](https://github.com/igo95862/python-sdbus#requirements).
+
+## Installation
+
+`pip install --only-binary ':all:' sdbus-notifications`
+
+# [Documentation](https://python-sdbus-notifications.readthedocs.io/en/latest/)
 
 This is the sub-project of [python-sdbus](https://github.com/igo95862/python-sdbus).
 
-See the [notifications interface documentation](https://python-sdbus.readthedocs.io/en/latest/proxies/notifications.html) and [python-sdbus Documentation](https://python-sdbus.readthedocs.io/en/latest/proxies/notifications.html).
+See the [python-sdbus documentation](https://python-sdbus.readthedocs.io/en/latest/).
