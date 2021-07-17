@@ -29,7 +29,7 @@ setup(
     description=('Freedesktop notifications binds for sdbus.'),
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='1.0.0',
+    version='1.0.1',
     url='https://github.com/igo95862/python-sdbus',
     author='igo95862',
     author_email='igo95862@yandex.ru',
@@ -64,6 +64,6 @@ setup(
     },
     python_requires='>=3.7',
     install_requires=[
-        'sdbus',
+        'sdbus>=0.8rc2',
     ],
 )
