@@ -29,19 +29,25 @@ setup(
     description=('Freedesktop notifications binds for sdbus.'),
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='1.0.1',
-    url='https://github.com/igo95862/python-sdbus',
+    version='1.0.2',
+    url='https://github.com/python-sdbus/python-sdbus-notifications',
     author='igo95862',
     author_email='igo95862@yandex.ru',
     license='LGPL-2.1-or-later',
     keywords='dbus notifications linux freedesktop',
     project_urls={
-        'Documentation': 'https://python-sdbus.readthedocs.io/en/latest/',
-        'Source': 'https://github.com/igo95862/python-sdbus/',
-        'Tracker': 'https://github.com/igo95862/python-sdbus/issues/',
+        'Documentation': (
+            'https://python-sdbus-notifications.readthedocs.io/en/latest/'
+        ),
+        'Source': (
+            'https://github.com/python-sdbus/python-sdbus-notifications'
+        ),
+        'Tracker': (
+            'https://github.com/python-sdbus/python-sdbus-notifications/issues'
+        ),
     },
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         (
             'License :: OSI Approved :: '
