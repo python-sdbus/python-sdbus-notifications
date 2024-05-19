@@ -234,4 +234,8 @@ class FreedesktopNotifications(
             hints_dict['x'] = ('i', xy_pos[0])
             hints_dict['y'] = ('i', xy_pos[1])
 
+        # urgency
+        if urgency is not None:
+            hints_dict['urgency'] = ('y', urgency)
+
         return hints_dict
