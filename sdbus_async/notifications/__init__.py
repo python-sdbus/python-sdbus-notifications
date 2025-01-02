@@ -20,7 +20,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Optional
 
 from sdbus import (DbusInterfaceCommonAsync, dbus_method_async,
                    dbus_signal_async)
@@ -40,7 +40,7 @@ class NotificationsInterface(
         raise NotImplementedError
 
     @dbus_method_async()
-    async def get_capabilities(self) -> List[str]:
+    async def get_capabilities(self) -> list[str]:
         """Returns notification daemon capabilities.
 
         List of capabilities:
@@ -62,17 +62,17 @@ class NotificationsInterface(
         * "sound" - The server supports sounds on notifications.
 
         :returns: List of capabilities
-        :rtype: List[str]
+        :rtype: list[str]
         """
         raise NotImplementedError
 
     @dbus_method_async()
-    async def get_server_information(self) -> Tuple[str, str, str, str]:
+    async def get_server_information(self) -> tuple[str, str, str, str]:
         """Returns notification server information.
 
         :returns: Tuple of server name, server vendor, version, notifications \
             specification version
-        :rtype: Tuple[str, str, str, str]
+        :rtype: tuple[str, str, str, str]
         """
         raise NotImplementedError
 
@@ -84,8 +84,8 @@ class NotificationsInterface(
             app_icon: str = '',
             summary: str = '',
             body: str = '',
-            actions: List[str] = [],
-            hints: Dict[str, Tuple[str, Any]] = {},
+            actions: list[str] = [],
+            hints: dict[str, tuple[str, Any]] = {},
             expire_timeout: int = -1, ) -> int:
         """Create new notification.
 
@@ -96,9 +96,9 @@ class NotificationsInterface(
         :param str app_icon: Optional application icon name.
         :param str summary: Summary of notification.
         :param str body: Optional body of notification.
-        :param List[str] actions: Optional list of actions presented to user. \
+        :param list[str] actions: Optional list of actions presented to user. \
             List index becomes action id.
-        :param Dict[str,Tuple[str,Any]] hints: Extra options such as sounds \
+        :param dict[str,tuple[str,Any]] hints: Extra options such as sounds \
             that can be passed. See :py:meth:`create_hints`.
         :param int expire_timeout: Optional notification expiration timeout \
             in milliseconds. -1 means dependent on server setting, \
@@ -110,7 +110,7 @@ class NotificationsInterface(
         raise NotImplementedError
 
     @dbus_signal_async()
-    def action_invoked(self) -> Tuple[int, int]:
+    def action_invoked(self) -> tuple[int, int]:
         """Signal when user invokes one of the actions specified.
 
         First element of tuple is notification id.
@@ -121,7 +121,7 @@ class NotificationsInterface(
         raise NotImplementedError
 
     @dbus_signal_async()
-    def notification_closed(self) -> Tuple[int, int]:
+    def notification_closed(self) -> tuple[int, int]:
         """Signal when notification is closed.
 
         First element of the tuple is notification id.
@@ -141,17 +141,17 @@ class NotificationsInterface(
         category: Optional[str] = None,
         desktop_entry_name: Optional[str] = None,
         image_data_tuple: Optional[
-            Tuple[int, int, int, bool, int, int, Union[bytes, bytearray]]
+            tuple[int, int, int, bool, int, int, bytes | bytearray]
         ] = None,
-        image_path: Optional[Union[str, Path]] = None,
+        image_path: Optional[str | Path] = None,
         is_resident: Optional[bool] = None,
-        sound_file_path: Optional[Union[str, Path]] = None,
+        sound_file_path: Optional[str | Path] = None,
         sound_name: Optional[str] = None,
         suppress_sound: Optional[bool] = None,
         is_transient: Optional[bool] = None,
-        xy_pos: Optional[Tuple[int, int]] = None,
+        xy_pos: Optional[tuple[int, int]] = None,
         urgency: Optional[int] = None,
-    ) -> Dict[str, Tuple[str, Any]]:
+    ) -> dict[str, tuple[str, Any]]:
         """Create hints dictionary for :py:meth:`notify`.
 
         All parameters are optional.
@@ -163,15 +163,15 @@ class NotificationsInterface(
         :param str desktop_entry_name: This specifies the name of the \
             desktop filename representing the calling program. \
             An example would be "rhythmbox" from "rhythmbox.desktop".
-        :param Tuple[int,int,int,bool,int,int,Union[bytes,bytearray]] \
+        :param tuple[int,int,int,bool,int,int,bytes|bytearray] \
             image_data_tuple: This is a raw data image format which \
             describes the width, height, rowstride, has alpha, \
             bits per sample, channels and image data respectively.
-        :param Union[str,Path] image_path: Path to notification image. \
+        :param str|Path image_path: Path to notification image. \
             (alternative to desktop_entry_name)
         :param bool is_resident: When set the server will not automatically \
             remove the notification when an action has been invoked.
-        :param Union[str,Path] sound_file_path: The path to a sound file \
+        :param str|Path sound_file_path: The path to a sound file \
             to play when the notification pops up.
         :param str sound_name: A themeable named sound to play. Similar to \
             icon-name, only for sounds. \
@@ -181,12 +181,12 @@ class NotificationsInterface(
         :param bool is_transient: When set the server will treat \
             the notification as transient and by-pass the server's \
             persistence capability.
-        :param Tuple[int,int] xy_pos: Specifies the X and Y location on the \
+        :param tuple[int,int] xy_pos: Specifies the X and Y location on the \
             screen that the notification should point to.
         :param int urgency: The urgency level. 0 low, 1 normal, 2 critical.
         """
 
-        hints_dict: Dict[str, Tuple[str, Any]] = {}
+        hints_dict: dict[str, tuple[str, Any]] = {}
 
         # action-icons
         if use_action_icons is not None:
