@@ -20,7 +20,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from sdbus import DbusInterfaceCommon, dbus_method
 from sdbus.sd_bus_internals import SdBus
@@ -30,14 +30,14 @@ class FreedesktopNotifications(
         DbusInterfaceCommon,
         interface_name='org.freedesktop.Notifications'):
 
-    def __init__(self, bus: Optional[SdBus] = None) -> None:
+    def __init__(self, bus: SdBus | None = None) -> None:
         """
         Dbus interface object path and service name is
         predetermined.
         (at ``'org.freedesktop.Notifications'``,
         ``'/org/freedesktop/Notifications'``)
 
-        :param SdBus bus:
+        :param SdBus|None bus:
             Optional dbus connection. \
             If not passed the default dbus will be used.
         """
@@ -127,53 +127,53 @@ class FreedesktopNotifications(
 
     def create_hints(
         self,
-        use_action_icons: Optional[bool] = None,
-        category: Optional[str] = None,
-        desktop_entry_name: Optional[str] = None,
-        image_data_tuple: Optional[
-            tuple[int, int, int, bool, int, int, bytes | bytearray]
-        ] = None,
-        image_path: Optional[str | Path] = None,
-        is_resident: Optional[bool] = None,
-        sound_file_path: Optional[str | Path] = None,
-        sound_name: Optional[str] = None,
-        suppress_sound: Optional[bool] = None,
-        is_transient: Optional[bool] = None,
-        xy_pos: Optional[tuple[int, int]] = None,
-        urgency: Optional[int] = None,
+        use_action_icons: bool | None = None,
+        category: str | None = None,
+        desktop_entry_name: str | None = None,
+        image_data_tuple:
+            tuple[int, int, int, bool, int, int, bytes | bytearray] | None
+          = None,
+        image_path: str | Path | None = None,
+        is_resident: bool | None = None,
+        sound_file_path: str | Path | None = None,
+        sound_name: str | None = None,
+        suppress_sound: bool | None = None,
+        is_transient: bool | None = None,
+        xy_pos: tuple[int, int] | None = None,
+        urgency: int | None = None,
     ) -> dict[str, tuple[str, Any]]:
         """Create hints dictionary for :py:meth:`notify`.
 
         All parameters are optional.
 
-        :param bool use_action_icons: When set, a server that has the \
+        :param bool|None use_action_icons: When set, a server that has the \
             "action-icons" capability will attempt to interpret any action \
             identifier as a named icon.
-        :param str category: The type of notification. (what types there are?)
-        :param str desktop_entry_name: This specifies the name of the \
+        :param str|None category: The type of notification. (what types there are?)
+        :param str|None desktop_entry_name: This specifies the name of the \
             desktop filename representing the calling program. \
             An example would be "rhythmbox" from "rhythmbox.desktop".
-        :param tuple[int,int,int,bool,int,int,bytes|bytearray] \
+        :param tuple[int,int,int,bool,int,int,bytes|bytearray]|None \
             image_data_tuple: This is a raw data image format which \
             describes the width, height, rowstride, has alpha, \
             bits per sample, channels and image data respectively.
-        :param str|Path image_path: Path to notification image. \
+        :param str|Path|None image_path: Path to notification image. \
             (alternative to desktop_entry_name)
-        :param bool is_resident: When set the server will not automatically \
+        :param bool|None is_resident: When set the server will not automatically \
             remove the notification when an action has been invoked.
-        :param str|Path sound_file_path: The path to a sound file \
+        :param str|Path|None sound_file_path: The path to a sound file \
             to play when the notification pops up.
-        :param str sound_name: A themeable named sound to play. Similar to \
+        :param str|None sound_name: A themeable named sound to play. Similar to \
             icon-name, only for sounds. \
             An example would be "message-new-instant".
-        :param bool suppress_sound: Causes the server to suppress playing \
+        :param bool|None suppress_sound: Causes the server to suppress playing \
             any sounds when this notification is displayed.
-        :param bool is_transient: When set the server will treat \
+        :param bool|None is_transient: When set the server will treat \
             the notification as transient and by-pass the server's \
             persistence capability.
-        :param tuple[int,int] xy_pos: Specifies the X and Y location on the \
+        :param tuple[int,int]|None xy_pos: Specifies the X and Y location on the \
             screen that the notification should point to.
-        :param int urgency: The urgency level. 0 low, 1 normal, 2 critical.
+        :param int|None urgency: The urgency level. 0 low, 1 normal, 2 critical.
         """
 
         hints_dict: dict[str, tuple[str, Any]] = {}
