@@ -68,7 +68,7 @@ setup(
             'py.typed',
         ],
     },
-    python_requires='>=3.9',
+    python_requires='>=3.8',
     install_requires=[
         'sdbus>=0.8rc2',
     ],
