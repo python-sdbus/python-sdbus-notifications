@@ -22,8 +22,12 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from sdbus import (DbusInterfaceCommonAsync, dbus_method_async,
-                   dbus_signal_async)
+from sdbus import (
+    DbusInterfaceCommonAsync,
+    DbusUnprivilegedFlag,
+    dbus_method_async,
+    dbus_signal_async,
+)
 from sdbus.sd_bus_internals import SdBus
 
 
@@ -31,7 +35,11 @@ class NotificationsInterface(
         DbusInterfaceCommonAsync,
         interface_name='org.freedesktop.Notifications'):
 
-    @dbus_method_async('u')
+    @dbus_method_async(
+        input_signature="u",
+        result_args_names=(),
+        flags=DbusUnprivilegedFlag,
+    )
     async def close_notification(self, notif_id: int) -> None:
         """Close notification by id.
 
@@ -39,7 +47,11 @@ class NotificationsInterface(
         """
         raise NotImplementedError
 
-    @dbus_method_async()
+    @dbus_method_async(
+        result_signature="as",
+        result_args_names=('capabilities',),
+        flags=DbusUnprivilegedFlag,
+    )
     async def get_capabilities(self) -> List[str]:
         """Returns notification daemon capabilities.
 
@@ -66,7 +78,16 @@ class NotificationsInterface(
         """
         raise NotImplementedError
 
-    @dbus_method_async()
+    @dbus_method_async(
+        result_signature="ssss",
+        result_args_names=(
+            'server_name',
+            'server_vendor',
+            'version',
+            'notifications_version',
+        ),
+        flags=DbusUnprivilegedFlag,
+    )
     async def get_server_information(self) -> Tuple[str, str, str, str]:
         """Returns notification server information.
 
@@ -76,7 +97,12 @@ class NotificationsInterface(
         """
         raise NotImplementedError
 
-    @dbus_method_async("susssasa{sv}i")
+    @dbus_method_async(
+        input_signature="susssasa{sv}i",
+        result_signature="u",
+        result_args_names=('notif_id',),
+        flags=DbusUnprivilegedFlag,
+    )
     async def notify(
             self,
             app_name: str = '',
@@ -97,7 +123,8 @@ class NotificationsInterface(
         :param str summary: Summary of notification.
         :param str body: Optional body of notification.
         :param List[str] actions: Optional list of actions presented to user. \
-            List index becomes action id.
+            Should be sent in pairs of strings that represent action \
+            key identifier and a localized string to be displayed to user.
         :param Dict[str,Tuple[str,Any]] hints: Extra options such as sounds \
             that can be passed. See :py:meth:`create_hints`.
         :param int expire_timeout: Optional notification expiration timeout \
@@ -109,18 +136,23 @@ class NotificationsInterface(
 
         raise NotImplementedError
 
-    @dbus_signal_async()
-    def action_invoked(self) -> Tuple[int, int]:
+    @dbus_signal_async(
+        signal_signature="us",
+        signal_args_names=('notif_id', 'action_key'),
+    )
+    def action_invoked(self) -> Tuple[int, str]:
         """Signal when user invokes one of the actions specified.
 
         First element of tuple is notification id.
 
-        Second element is the index of the action invoked. \
-        Matches the index of passed list of actions.
+        Second element is the key identifier of the action invoked.
         """
         raise NotImplementedError
 
-    @dbus_signal_async()
+    @dbus_signal_async(
+        signal_signature="uu",
+        signal_args_names=('notif_id', 'reason'),
+    )
     def notification_closed(self) -> Tuple[int, int]:
         """Signal when notification is closed.
 
@@ -132,6 +164,24 @@ class NotificationsInterface(
         * 2 - notification was dismissed by user
         * 3 - notification was closed by call to :py:meth:`close_notification`
         * 4 - undefined/reserved reasons.
+        """
+        raise NotImplementedError
+
+    @dbus_signal_async(
+        signal_signature="us",
+        signal_args_names=('notif_id', 'action_key'),
+    )
+    def activation_token(self) -> Tuple[int, str]:
+        """Signal carrying window system token.
+
+        Emitted before :py:attr:`action_invoked`.
+
+        Carries windowing system token like X11 startup id or
+        Wayland adctivation token.
+
+        First element of tuple is notification id.
+
+        Second element is the key identifier of the action invoked.
         """
         raise NotImplementedError
 

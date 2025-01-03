@@ -22,7 +22,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from sdbus import DbusInterfaceCommon, dbus_method
+from sdbus import DbusInterfaceCommon, DbusUnprivilegedFlag, dbus_method
 from sdbus.sd_bus_internals import SdBus
 
 
@@ -47,7 +47,10 @@ class FreedesktopNotifications(
             bus,
         )
 
-    @dbus_method('u')
+    @dbus_method(
+        input_signature="u",
+        flags=DbusUnprivilegedFlag,
+    )
     def close_notification(self, notif_id: int) -> None:
         """Close notification by id.
 
@@ -55,7 +58,10 @@ class FreedesktopNotifications(
         """
         raise NotImplementedError
 
-    @dbus_method()
+    @dbus_method(
+        result_signature="as",
+        flags=DbusUnprivilegedFlag,
+    )
     def get_capabilities(self) -> List[str]:
         """Returns notification daemon capabilities.
 
@@ -82,7 +88,10 @@ class FreedesktopNotifications(
         """
         raise NotImplementedError
 
-    @dbus_method()
+    @dbus_method(
+        result_signature="ssss",
+        flags=DbusUnprivilegedFlag,
+    )
     def get_server_information(self) -> Tuple[str, str, str, str]:
         """Returns notification server information.
 
@@ -92,7 +101,11 @@ class FreedesktopNotifications(
         """
         raise NotImplementedError
 
-    @dbus_method('susssasa{sv}i')
+    @dbus_method(
+        input_signature="susssasa{sv}i",
+        result_signature="u",
+        flags=DbusUnprivilegedFlag,
+    )
     def notify(
             self,
             app_name: str = '',
@@ -113,7 +126,8 @@ class FreedesktopNotifications(
         :param str summary: Summary of notification.
         :param str body: Optional body of notification.
         :param List[str] actions: Optional list of actions presented to user. \
-            List index becomes action id.
+            Should be sent in pairs of strings that represent action \
+            key identifier and a localized string to be displayed to user.
         :param Dict[str,Tuple[str,Any]] hints: Extra options such as sounds \
             that can be passed. See :py:meth:`create_hints`.
         :param int expire_timeout: Optional notification expiration timeout \
