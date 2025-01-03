@@ -110,13 +110,12 @@ class NotificationsInterface(
         raise NotImplementedError
 
     @dbus_signal_async()
-    def action_invoked(self) -> tuple[int, int]:
+    def action_invoked(self) -> tuple[int, str]:
         """Signal when user invokes one of the actions specified.
 
         First element of tuple is notification id.
 
-        Second element is the index of the action invoked. \
-        Matches the index of passed list of actions.
+        Second element is the str name of the action invoked.
         """
         raise NotImplementedError
 
