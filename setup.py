@@ -29,7 +29,7 @@ setup(
     description=('Freedesktop notifications binds for sdbus.'),
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='1.0.2',
+    version='1.0.3',
     url='https://github.com/python-sdbus/python-sdbus-notifications',
     author='igo95862',
     author_email='igo95862@yandex.ru',
