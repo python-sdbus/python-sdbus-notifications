@@ -2,7 +2,7 @@ Freedesktop Notifications binds for python-sdbus
 ================================================
 
 This package contains python-sdbus binds for
-`Freedesktop notifications standard <https://specifications.freedesktop.org/notification-spec/notification-spec-latest.html>`_.
+`Freedesktop notifications standard <https://specifications.freedesktop.org/notification-spec/latest/protocol.html>`_.
 
 .. toctree::
 
